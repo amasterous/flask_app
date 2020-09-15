@@ -1,16 +1,6 @@
-from flask import Flask, render_template
+from app import app
+from app.models import User, Post
 
-app = Flask(__name__)
-
-
-@app.route("/")
-def home():
-    return render_template("main_page.html")
-
-@app.route('/about')
-def about():
-    return render_template("about.html")
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': User, 'Post': Post}
