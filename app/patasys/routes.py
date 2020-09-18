@@ -29,7 +29,8 @@ def add_patient():
             second_name=form.second_name.data,
             phone_number=form.phone_number.data,
             patronymic=form.patronymic.data,
-            medic=form.doctors.data
+            medic=form.doctors.data,
+            age=form.age.data,
         )
         db.session.add(patient)
         db.session.commit()
@@ -49,7 +50,7 @@ def add_doctor():
             second_name=form.second_name.data,
             phone_number=form.phone_number.data,
             patronymic=form.patronymic.data,
-            age=form.age.data,
+
         
         )
         db.session.add(doctor)

@@ -54,7 +54,23 @@ class Patient(db.Model):
     age = db.Column(db.Integer)
     time_arrived = db.Column(db.DateTime, default=datetime.utcnow)
     last_seen = db.Column(db.DateTime)
+    visits = db.relationship('Visit', backref='patient', lazy='dynamic')
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))
 
     def __repr__(self):
         return '<Fist name={} second name={}>'.format(self.first_name, self.second_name)
+    
+
+class Visit(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    visit_time = db.Column(db.Integer)
+    service_ids = db.Column(db.String)
+    cost = db.Column(db.Integer)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'))
+
+
+class Service(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, unique=True)
+    cost = db.Column(db.Integer)
+    code = db.Column(db.Integer)

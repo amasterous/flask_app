@@ -43,3 +43,9 @@ class AddDoctorForm(FlaskForm):
         tpl = r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
         if re.match(tpl, number) is None:
             raise ValidationError('Номер введен не верно')
+
+
+class AddServiceForm(FlaskForm):
+    name = StringField('Название', validators=[DataRequired()])
+    cost = StringField('Цена', validators=[DataRequired()])
+    code = StringField('Код', validators=[DataRequired()])

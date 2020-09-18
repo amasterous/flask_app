@@ -3,16 +3,21 @@
 {% block content %}
     {% if patient %}
     <div class="container">
+        <h2>Карточка пациента</h2>
+        <hr>
         <div class="row">
-            <div class="col">
-                <p>{{patient.second_name }} {{ patient.first_name }} {{ patient.patronymic }}</p>
-                <p>vozrast: {{ patient.age }}</p>
-                <p>nomer telephona: {{ patient.phone_number }}</p>
-                <p>doctor: {{ doctor.second_name }} {{doctor.first_name }}</p>
+            <div class="col-sm-6">
+                <p>{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic }}</p>
+                <p>Возраст: {{ patient.age }}</p>
+                <p>Номер телефона: {{ patient.phone_number }}</p>
+                <p>Лечащий врач: {{ doctor.second_name }} {{doctor.first_name }}</p>
             </div>
-            <div class="flex-sm-row">
+            <div class="col">
                 <img src="{{ url_for('static', filename='200x200.png') }}" alt="..." class="img-thumbnail">
             </div>
+        </div>
+        <h3>История приемов</h3>
+        <div class="row">
         </div>
     </div>
     {% endif %}
