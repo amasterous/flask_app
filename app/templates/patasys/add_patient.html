@@ -24,7 +24,13 @@
             {% for error in form.patronymic.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
+         <p>
+            {{ form.age.label }}<br>
+            {{ form.age(size=3) }}<br>
+            {% for error in form.age.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>       </p>
         <p>
             {{ form.phone_number.label }}<br>
             {{ form.phone_number(size=40) }}<br>

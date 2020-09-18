@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="container">
     {% if patients and doctors %}
     <div class="row">
         <div class="col-sm"> 
             <h3>Пациенты</h3>
         {% for patient in patients %}
-            {{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic}}
+            <a href="{{ url_for('patasys.view_patient', patient_id=patient.id) }}">{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic}}</a>
             <br>
     {% endfor %}
     </div>
@@ -21,4 +22,5 @@
     {% else %}
     <h2>Пока что нет пациентов</h2>
     {% endif %}
+    </div>
 {% endblock %}

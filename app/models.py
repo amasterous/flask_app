@@ -51,6 +51,7 @@ class Patient(db.Model):
     second_name = db.Column(db.String)
     patronymic = db.Column(db.String)
     phone_number = db.Column(db.String, index=True, unique=True)
+    age = db.Column(db.Integer)
     time_arrived = db.Column(db.DateTime, default=datetime.utcnow)
     last_seen = db.Column(db.DateTime)
     doctor_id = db.Column(db.Integer, db.ForeignKey('doctor.id'))

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 from app.auth.routes import login
-from flask import render_template, redirect, flash
+from flask import render_template, redirect, flash, request
 from flask.helpers import url_for
 from flask_login import login_required
 from werkzeug.utils import redirect
@@ -49,6 +49,7 @@ def add_doctor():
             second_name=form.second_name.data,
             phone_number=form.phone_number.data,
             patronymic=form.patronymic.data,
+            age=form.age.data,
         
         )
         db.session.add(doctor)
@@ -56,7 +57,6 @@ def add_doctor():
         flash('Новый доктор добавлен')
         return redirect(url_for('patasys.index'))
     return render_template('patasys/add_doctor.html', title='Add doctor', form=form)
-    pass
 
 @login_required
 @bp.route('/all_patients')
@@ -68,3 +68,16 @@ def all_patients():
         'doctors': doctors,
     }
     return render_template('patasys/all_patients.html', **context)
+
+
+@login_required
+@bp.route('/patient/<int:patient_id>')
+def view_patient(patient_id):
+    patient = Patient.query.filter_by(id=patient_id).first()
+    doctor = Doctor.query.filter_by(id=patient.doctor_id).first()
+    context = {
+        'patient': patient,
+        'doctor': doctor,
+    }
+    return render_template('patasys/view_patient.html', **context) 
+
