@@ -7,7 +7,6 @@
         <hr>
         <div class="row">
             <div class="col-sm-6">
-<<<<<<< HEAD
                 <p><b>{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic }}</b></p>
                 <p>Возраст: {{ patient.age }}</p>
                 <p>Номер телефона: {{ patient.phone_number }}</p>
@@ -54,12 +53,6 @@
                 {% endif %}
                 {% endif %}
                 <a class="btn btn-primary" role="button" href="{{ url_for('patasys.view_patient', patient_id=patient.id, funcc=3) }}">Назначить время</a>
-=======
-                <p>{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic }}</p>
-                <p>Возраст: {{ patient.age }}</p>
-                <p>Номер телефона: {{ patient.phone_number }}</p>
-                <p>Лечащий врач: {{ doctor.second_name }} {{doctor.first_name }}</p>
->>>>>>> 82800f2f8c0e2670d52e325c46aee6878cc9c68f
             </div>
             <div class="col">
                 <img src="{{ url_for('static', filename='200x200.png') }}" alt="..." class="img-thumbnail">

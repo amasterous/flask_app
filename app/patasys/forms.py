@@ -13,11 +13,7 @@ class AddPatientForm(FlaskForm):
     patronymic = StringField('Отчество', validators=[DataRequired()])
     phone_number = StringField('Номер телефона')
     age = StringField('Vozrast')
-<<<<<<< HEAD
     doctors = QuerySelectField(label='Doctor', query_factory=lambda: Doctor.query.all(), blank_text='Bez vracha', allow_blank=True)
-=======
-    doctors = QuerySelectField(label='Doctor', query_factory=lambda: Doctor.query.all(), default='Bez vracha')
->>>>>>> 82800f2f8c0e2670d52e325c46aee6878cc9c68f
     submit = SubmitField('Добавить пациента')
 
 
@@ -52,9 +48,5 @@ class AddDoctorForm(FlaskForm):
 class AddServiceForm(FlaskForm):
     name = StringField('Название', validators=[DataRequired()])
     cost = StringField('Цена', validators=[DataRequired()])
-<<<<<<< HEAD
     code = StringField('Код', validators=[DataRequired()])
     submit = SubmitField('Добавить услугу')
-=======
-    code = StringField('Код', validators=[DataRequired()])
->>>>>>> 82800f2f8c0e2670d52e325c46aee6878cc9c68f

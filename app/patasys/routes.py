@@ -72,7 +72,6 @@ def all_patients():
 
 
 @login_required
-<<<<<<< HEAD
 @bp.route('/patient/<int:patient_id>/<int:funcc>', methods=['GET', 'POST'])
 def view_patient(patient_id, funcc):
     # print(request.method)
@@ -115,7 +114,7 @@ def view_patient(patient_id, funcc):
     context = {
         'patient': patient,
         'doctor': doctor,
-        'doctors': doctors'
+        'doctors': doctors,
     }
     return render_template('patasys/view_patient.html', **context) 
 
@@ -135,15 +134,3 @@ def add_service():
         flash('Услуга добавлена')
         return redirect(url_for('patasys.index'))
     return render_template('patasys/add_service.html', title='add service', form=form)
-=======
-@bp.route('/patient/<int:patient_id>')
-def view_patient(patient_id):
-    patient = Patient.query.filter_by(id=patient_id).first()
-    doctor = Doctor.query.filter_by(id=patient.doctor_id).first()
-    context = {
-        'patient': patient,
-        'doctor': doctor,
-    }
-    return render_template('patasys/view_patient.html', **context) 
-
->>>>>>> 82800f2f8c0e2670d52e325c46aee6878cc9c68f
