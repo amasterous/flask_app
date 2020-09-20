@@ -6,9 +6,11 @@ from flask_login import login_required
 from werkzeug.utils import redirect
 from app.patasys import bp
 from flask_login import current_user
-from app.patasys.forms import AddPatientForm, AddDoctorForm, AddServiceForm
-from app.models import Patient, Doctor, Service
+from app.patasys.forms import AddPatientForm, AddDoctorForm, AddServiceForm, AddVisitForm
+from app.models import Patient, Doctor, Service, Visit
 from app import db
+from datetime import datetime
+import time
 
 
 @bp.route('/')
@@ -16,6 +18,11 @@ from app import db
 @login_required
 def index():
     return render_template('patasys/index.html', title='Home')
+
+@bp.app_template_filter('ctime')
+def timectime(s):
+    value = datetime.fromtimestamp(int(s))
+    return value.strftime('%Y-%m-%d %H:%M:%S')
 
 
 @login_required
@@ -75,7 +82,7 @@ def all_patients():
 @bp.route('/patient/<int:patient_id>/<int:funcc>', methods=['GET', 'POST'])
 def view_patient(patient_id, funcc):
     # print(request.method)
-    if request.method == "POST":
+    if request.method == "POST" and funcc==2:
         doc_id = request.form.get('doctor')
         print(doc_id)
         doctor = Doctor.query.filter_by(id=doc_id).first()
@@ -109,14 +116,29 @@ def view_patient(patient_id, funcc):
     patient = Patient.query.filter_by(id=patient_id).first()
     doctor = Doctor.query.filter_by(id=patient.doctor_id).first()
     doctors = ''
+    form = ''
     if (funcc == 2):
         doctors = Doctor.query.all()
+    elif (funcc == 3):
+        form = AddVisitForm()
+        if form.validate_on_submit():
+            tim = time.strptime(form.visit_time.data, "%Y-%m-%d %H:%M:%S")
+            visit = Visit(
+                visit_time = time.mktime(tim),
+                patient_id = patient_id,
+            )
+            db.session.add(visit)
+            db.session.commit()
+            flash('Время успешно записано')
+            return redirect(url_for('patasys.index'))
+        
+    
     context = {
         'patient': patient,
         'doctor': doctor,
         'doctors': doctors,
     }
-    return render_template('patasys/view_patient.html', **context) 
+    return render_template('patasys/view_patient.html', **context, form=form) 
 
 
 @login_required

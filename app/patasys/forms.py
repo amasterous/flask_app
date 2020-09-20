@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from sqlalchemy.orm.query import Query
+from datetime import datetime, timezone
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app.models import Patient, Doctor
+
 import re
 
 
@@ -50,3 +51,9 @@ class AddServiceForm(FlaskForm):
     cost = StringField('Цена', validators=[DataRequired()])
     code = StringField('Код', validators=[DataRequired()])
     submit = SubmitField('Добавить услугу')
+
+
+class AddVisitForm(FlaskForm):
+    visit_time = StringField('Время сеанса', default=datetime.today().strftime("%Y-%m-%d %H:%M:%S"),  validators=[DataRequired()])
+    submit = SubmitField('Записать')
+    
