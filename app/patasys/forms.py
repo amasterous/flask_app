@@ -8,16 +8,12 @@ import re
 
 
 class AddPatientForm(FlaskForm):
-    def get_patients():
-        # patients = Patient.query.all()
-        # return patients
-        pass
     first_name = StringField('Имя', validators=[DataRequired()])
     second_name = StringField('Фамилия', validators=[DataRequired()])
     patronymic = StringField('Отчество', validators=[DataRequired()])
     phone_number = StringField('Номер телефона')
-    doctors = QuerySelectField(query_factory=lambda: Doctor.query.all())
-    # doctor = SelectField('Doctor', choices = doctors, validators=[DataRequired()])
+    age = StringField('Vozrast')
+    doctors = QuerySelectField(label='Doctor', query_factory=lambda: Doctor.query.all(), blank_text='Bez vracha', allow_blank=True)
     submit = SubmitField('Добавить пациента')
 
 
@@ -26,7 +22,7 @@ class AddPatientForm(FlaskForm):
         patient = Patient.query.filter_by(phone_number=number).first()
         if patient is not None:
             raise ValidationError('Данный номер телефона привязян к другому пациенту.')
-        tpl = '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
+        tpl = r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
         if re.match(tpl, number) is None:
             raise ValidationError('Номер введен не верно')
 
@@ -44,6 +40,13 @@ class AddDoctorForm(FlaskForm):
         doctor = Doctor.query.filter_by(phone_number=number).first()
         if doctor is not None:
             raise ValidationError('Данный номер телефона привязян к другому доктору.')
-        tpl = '^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
+        tpl = r'^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$'
         if re.match(tpl, number) is None:
             raise ValidationError('Номер введен не верно')
+
+
+class AddServiceForm(FlaskForm):
+    name = StringField('Название', validators=[DataRequired()])
+    cost = StringField('Цена', validators=[DataRequired()])
+    code = StringField('Код', validators=[DataRequired()])
+    submit = SubmitField('Добавить услугу')

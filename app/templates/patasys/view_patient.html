@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if patient %}
+    <div class="container">
+        <h2>Карточка пациента</h2>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                <p><b>{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic }}</b></p>
+                <p>Возраст: {{ patient.age }}</p>
+                <p>Номер телефона: {{ patient.phone_number }}</p>
+                <p>Лечащий врач: 
+                    {% if doctor.second_name %}
+                    {{ doctor.second_name }} {{doctor.first_name }}
+                    {% if doctor.second_name and not doctors %}
+                    <a class="btn-sm btn-info" role="button" href="{{ url_for('patasys.view_patient', patient_id=patient.id, funcc=2) }}">Изменить врача</a>
+                    {% endif %}
+                    {% else %}
+                    <mark>врач пока что не назначен</mark>
+                    {% endif %}
+                </p>
+                {% if not doctor.second_name %}
+                    {% if doctors %}
+                    <form method="POST" action="/patasys/patient/{{patient.id}}/2">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Выберите врача</label>
+                            <select class="form-control" name="doctor">
+                            {% for doc in doctors %}
+                                <option value="{{ doc.id }}">{{ doc.second_name }} {{ doc.first_name}}</option>
+                            {% endfor %}
+                            </select>
+                            <button class="btn btn-success" type="submit">submit</button>
+                        </div>
+                    </form>
+                    {% endif %}
+                    {% if not doctors %}
+                        <a class="btn btn-primary" role="button" href="{{ url_for('patasys.view_patient', patient_id=patient.id, funcc=2) }}">Назначить врача</a>
+                    {% endif %}
+                {% else %}
+                {% if doctors %}
+                    <form method="POST" action="/patasys/patient/{{patient.id}}/2">
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Выберите врача</label>
+                            <select class="form-control" name="doctor">
+                            {% for doc in doctors %}
+                                <option value="{{ doc.id }}">{{ doc.second_name }} {{ doc.first_name}}</option>
+                            {% endfor %}
+                            </select>
+                            <button class="btn btn-success" type="submit">submit</button>
+                        </div>
+                    </form>
+                {% endif %}
+                {% endif %}
+                <a class="btn btn-primary" role="button" href="{{ url_for('patasys.view_patient', patient_id=patient.id, funcc=3) }}">Назначить время</a>
+            </div>
+            <div class="col">
+                <img src="{{ url_for('static', filename='200x200.png') }}" alt="..." class="img-thumbnail">
+            </div>
+        </div>
+        <h3>История приемов</h3>
+        <div class="row">
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

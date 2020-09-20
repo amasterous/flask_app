@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="container">
     <h1>Add patient</h1>
     <form action="" method="post"  novalidate>
         {{ form.hidden_tag() }}
@@ -24,7 +25,13 @@
             {% for error in form.patronymic.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
+         <p>
+            {{ form.age.label }}<br>
+            {{ form.age(size=3) }}<br>
+            {% for error in form.age.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>       </p>
         <p>
             {{ form.phone_number.label }}<br>
             {{ form.phone_number(size=40) }}<br>
@@ -40,4 +47,5 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
+</div>
  {% endblock %}

@@ -124,4 +124,5 @@ dmypy.json
 .pyre/
 
 app.db
+*.db
 migrations/

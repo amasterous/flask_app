@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if patients and doctors %}
-    <div class="row">
-        <div class="col-sm"> 
-            <h3>Пациенты</h3>
-        {% for patient in patients %}
-            {{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic}}
-            <br>
-    {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm"> 
+                <h3>Пациенты</h3>
+                {% if patients %}
+                    {% for patient in patients %}
+                        <a href="{{ url_for('patasys.view_patient', patient_id=patient.id, funcc=1) }}">{{ patient.second_name }} {{ patient.first_name }} {{ patient.patronymic}}</a>
+                        <br>
+                    {% endfor %}
+                {% else %}
+                <p>Пациентов пока что нет</p>
+                {% endif %}
+            </div>
+            <div class="col-sm"> 
+                <h3>Доктора</h3>
+                {% if doctors %}
+                    {% for doctor in doctors %}
+                        {{ doctor.second_name }} {{ doctor.first_name }} {{ doctor.patronymic}}
+                        <br>
+                    {% endfor %}
+                {% else %}
+                    <p>Докторов пока что нет</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
-        <div class="col-sm"> 
-            <h3>Врачи</h3>
-        {% for doctor in doctors %}
-            {{ doctor.second_name }} {{ doctor.first_name }} {{ doctor.patronymic}}
-            <br>
-    {% endfor %}
-    </div>
-    </div>
-    {% else %}
-    <h2>Пока что нет пациентов</h2>
-    {% endif %}
 {% endblock %}

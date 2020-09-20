@@ -44,17 +44,21 @@
           </div>
         {% endif %}
           </nav>
+
+        <div class="alert alert-info" role="alert">flash:
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
+            <mark>{{ message }}</mark>
             {% endfor %}
         {% endif %}
-        {% endwith %}
-        <div class="container">
+        {% endwith %}</div>
         {% block content %}
         
         {% endblock %}
+        <div class="container">
+          <a href="{{ url_for('patasys.index') }}">xdxdxdxd</a>
         </div>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
