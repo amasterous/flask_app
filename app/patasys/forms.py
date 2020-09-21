@@ -54,6 +54,6 @@ class AddServiceForm(FlaskForm):
 
 
 class AddVisitForm(FlaskForm):
-    visit_time = StringField('Время сеанса', default=datetime.today().strftime("%Y-%m-%d %H:%M:%S"),  validators=[DataRequired()])
+    visit_time = StringField('Время сеанса', default=datetime.today().strftime("%Y-%m-%d %H:%M"),  validators=[DataRequired()])
     submit = SubmitField('Записать')
     

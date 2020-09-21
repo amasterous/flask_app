@@ -60,7 +60,7 @@
                     {{ form.hidden_tag() }}
                     <p>
                         {{ form.visit_time.label }}<br>
-                        {{ form.visit_time(size=40) }}<br>
+                        {{ form.visit_time(id="datetimepicker") }}<br>
                         {% for error in form.visit_time.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
@@ -81,9 +81,22 @@
                     {% for vis in patient.visits %}
                     <p>{{ vis.visit_time|ctime }}</p>
                     {% endfor %}
+                    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jquery.datetimepicker.css')}}"/ >
+                    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+                    <script src="{{ url_for('static', filename='jquery.datetimepicker.full.min.js')}}"></script>
+                    
+                           
+                            <!-- <input id="datetimepicker" type="text" > -->
+                            <script>jQuery('#datetimepicker').datetimepicker({
+                                format:'Y-m-d H:i'
+                            });</script>
+
+                        </div>
+                    </div>
                 
             </div>
         </div>
     </div>
     {% endif %}
+
 {% endblock %}

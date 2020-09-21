@@ -22,7 +22,7 @@ def index():
 @bp.app_template_filter('ctime')
 def timectime(s):
     value = datetime.fromtimestamp(int(s))
-    return value.strftime('%Y-%m-%d %H:%M:%S')
+    return value.strftime('%Y-%m-%d %H:%M   ')
 
 
 @login_required
@@ -84,11 +84,11 @@ def view_patient(patient_id, funcc):
     # print(request.method)
     if request.method == "POST" and funcc==2:
         doc_id = request.form.get('doctor')
-        print(doc_id)
+        # print(doc_id)
         doctor = Doctor.query.filter_by(id=doc_id).first()
         if doctor:
             patient = Patient.query.filter_by(id=patient_id).first()
-            print(patient)
+            # print(patient)
             if patient.doctor_id == None:
                 patient.doctor_id = doc_id
                 db.session.add(patient)
@@ -122,7 +122,7 @@ def view_patient(patient_id, funcc):
     elif (funcc == 3):
         form = AddVisitForm()
         if form.validate_on_submit():
-            tim = time.strptime(form.visit_time.data, "%Y-%m-%d %H:%M:%S")
+            tim = time.strptime(form.visit_time.data, "%Y-%m-%d %H:%M")
             visit = Visit(
                 visit_time = time.mktime(tim),
                 patient_id = patient_id,
