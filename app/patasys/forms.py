@@ -3,7 +3,8 @@ from datetime import datetime, timezone
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from app.models import Patient, Doctor
+from app.models import Patient, Doctor, Service
+from config import Config
 
 import re
 
@@ -52,8 +53,13 @@ class AddServiceForm(FlaskForm):
     code = StringField('Код', validators=[DataRequired()])
     submit = SubmitField('Добавить услугу')
 
+    def validate_code(self, code):
+        service = Service.query.filter_by(code=code.data).first()
+        if service is not None:
+            raise ValidationError('Такой код услуги уже используется')
+
 
 class AddVisitForm(FlaskForm):
-    visit_time = StringField('Время сеанса', default=datetime.today().strftime("%Y-%m-%d %H:%M"),  validators=[DataRequired()])
+    visit_time = StringField('Время сеанса', default=datetime.today().strftime(Config.DATETIME_FORMAT),  validators=[DataRequired()])
     submit = SubmitField('Записать')
     

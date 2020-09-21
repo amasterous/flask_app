@@ -79,17 +79,11 @@
             <div class="col">
                 
                     {% for vis in patient.visits %}
-                    <p>{{ vis.visit_time|ctime }}</p>
+                        {% if vis.visit_time < current_time %}
+                            <p>{{ vis.visit_time|ctime }}</p>
+                        {% endif %}
                     {% endfor %}
-                    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jquery.datetimepicker.css')}}"/ >
-                    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
-                    <script src="{{ url_for('static', filename='jquery.datetimepicker.full.min.js')}}"></script>
-                    
-                           
-                            <!-- <input id="datetimepicker" type="text" > -->
-                            <script>jQuery('#datetimepicker').datetimepicker({
-                                format:'Y-m-d H:i'
-                            });</script>
+
 
                         </div>
                     </div>
@@ -98,5 +92,13 @@
         </div>
     </div>
     {% endif %}
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jquery.datetimepicker.css')}}"/ >
+    <script src="{{ url_for('static', filename='jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='jquery.datetimepicker.full.min.js')}}"></script>
+    
+           
+            <!-- <input id="datetimepicker" type="text" > -->
+            <script>jQuery('#datetimepicker').datetimepicker({
+                format:'Y-m-d H:i'
+            });</script>
 {% endblock %}

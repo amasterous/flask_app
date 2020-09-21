@@ -11,6 +11,7 @@ from app.models import Patient, Doctor, Service, Visit
 from app import db
 from datetime import datetime
 import time
+from config import Config
 
 
 @bp.route('/')
@@ -22,7 +23,7 @@ def index():
 @bp.app_template_filter('ctime')
 def timectime(s):
     value = datetime.fromtimestamp(int(s))
-    return value.strftime('%Y-%m-%d %H:%M   ')
+    return value.strftime(Config.DATETIME_FORMAT)
 
 
 @login_required
@@ -122,7 +123,7 @@ def view_patient(patient_id, funcc):
     elif (funcc == 3):
         form = AddVisitForm()
         if form.validate_on_submit():
-            tim = time.strptime(form.visit_time.data, "%Y-%m-%d %H:%M")
+            tim = time.strptime(form.visit_time.data, Config.DATETIME_FORMAT)
             visit = Visit(
                 visit_time = time.mktime(tim),
                 patient_id = patient_id,
@@ -130,13 +131,16 @@ def view_patient(patient_id, funcc):
             db.session.add(visit)
             db.session.commit()
             flash('Время успешно записано')
-            return redirect(url_for('patasys.index'))
+            return redirect(url_for('patasys.view_patient',
+                patient_id=patient.id, funcc=1, 
+            ))
         
-    
+    current_time = time.time()
     context = {
         'patient': patient,
         'doctor': doctor,
         'doctors': doctors,
+        'current_time': current_time,
     }
     return render_template('patasys/view_patient.html', **context, form=form) 
 
@@ -156,3 +160,17 @@ def add_service():
         flash('Услуга добавлена')
         return redirect(url_for('patasys.index'))
     return render_template('patasys/add_service.html', title='add service', form=form)
+
+
+@login_required
+@bp.route('/schedule')
+def schedule():
+    hours = int(datetime.today().strftime("%H"))
+    minutes = int(datetime.today().strftime("%M"))
+    visits = Visit.query.filter(
+        Visit.visit_time>=(int(time.time())-(hours*3600-minutes*60)),
+        Visit.visit_time<=(int(time.time())+((24-hours)*3600-minutes*60)),
+           
+    )
+
+    return render_template('patasys/schedule.html', visits=visits)

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h2>Расписание</h2>
+        {% for vis in visits %}
+        <div>
+            <p>{{ vis.visit_time|ctime }}</p>
+            <p>{{ vis.visit_time }}</p>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}

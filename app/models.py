@@ -73,4 +73,4 @@ class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
     cost = db.Column(db.Integer)
-    code = db.Column(db.Integer)
+    code = db.Column(db.Integer, unique=True)
